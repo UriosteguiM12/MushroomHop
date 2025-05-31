@@ -15,7 +15,9 @@ let config = {
             gravity: {
                 x: 0,
                 y: 0
-            }
+            },
+            fps: 120,           
+            fixedStep: true 
         }
     },
     width: 1440,

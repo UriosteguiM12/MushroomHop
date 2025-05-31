@@ -4,11 +4,11 @@ class mushroomHop extends Phaser.Scene {
     }
 
     init() {
-        this.ACCELERATION = 800;
+        this.ACCELERATION = 1200;
         this.MAX_VELOCITY = 512;
-        this.DRAG = 1152;
-        this.JUMP_VELOCITY = -600;
-        this.physics.world.gravity.y = 820;
+        this.DRAG = 2000;
+        this.JUMP_VELOCITY = -650;
+        this.physics.world.gravity.y = 1400;
     }
 
     create() {
@@ -78,7 +78,7 @@ class mushroomHop extends Phaser.Scene {
 
         // Gravity multiplier when falling
         if (!my.sprite.player.body.blocked.down && my.sprite.player.body.velocity.y > 0) {
-            my.sprite.player.setGravityY(this.physics.world.gravity.y * 1.5);
+            my.sprite.player.setGravityY(this.physics.world.gravity.y);
         } else {
             my.sprite.player.setGravityY(0);
         }

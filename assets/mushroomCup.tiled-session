@@ -19,15 +19,16 @@
             "scaleInDock": 1
         },
         "platformer-level-1.tmx": {
-            "scale": 0.5,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1403,
-                "y": 45
+                "x": 1825.5,
+                "y": 54.5
             }
         },
         "platformer-level-1.tmx#kenney_tilemap_packed": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 3
         }
     },
     "last.exportedFilePath": "C:/Users/marin/CMPM120/MushroomHop/assets",
@@ -38,10 +39,12 @@
     "map.tileWidth": 18,
     "map.width": 134,
     "openFiles": [
+        "platformer-level-1.tmx"
     ],
     "project": "mushroomCup.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "platformer-level-1.tmx",
         "platformer-level-1..tmx"
     ],
     "tileset.embedInMap": true,
