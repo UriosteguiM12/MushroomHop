@@ -4,11 +4,11 @@ class mushroomHop extends Phaser.Scene {
     }
 
     init() {
-        // variables and settings
-        this.ACCELERATION = 500;
-        this.DRAG = 800;    // DRAG < ACCELERATION = icy slide
-        this.physics.world.gravity.y = 1500;
-        this.JUMP_VELOCITY = -800;
+        this.ACCELERATION = 800;
+        this.MAX_VELOCITY = 512;
+        this.DRAG = 1152;
+        this.JUMP_VELOCITY = -600;
+        this.physics.world.gravity.y = 820;
     }
 
     create() {
@@ -27,11 +27,11 @@ class mushroomHop extends Phaser.Scene {
 
 
         // set up player avatar
-        my.sprite.player = this.physics.add.sprite(game.config.width/4, game.config.height/2, "platformer_characters", "tile_0000.png").setScale(SCALE)
+        my.sprite.player = this.physics.add.sprite(game.config.width/4, game.config.height/2, "platformer_characters", "tile_0020.png").setScale(SCALE)
         my.sprite.player.setCollideWorldBounds(true);
 
         // Enable collision handling
-        this.physics.add.collider(my.sprite.player, this.layerOne);
+        this.physics.add.collider(my.sprite.player, this.groundLayer);
 
         // set up Phaser-provided cursor key input
         cursors = this.input.keyboard.createCursorKeys();
@@ -42,9 +42,53 @@ class mushroomHop extends Phaser.Scene {
             this.physics.world.debugGraphic.clear()
         }, this);
 
+
+        this.cameras.main.setBounds(0, 0,4800, 800);
+        this.physics.world.setBounds(0, 0, 4800, 800);
+        this.cameras.main.startFollow(my.sprite.player, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])
+        this.cameras.main.setDeadzone(50, 50);
+        this.cameras.main.setZoom(this.SCALE);
+
     }
 
     update() {
+
+        // Horizontal movement
+        if (cursors.left.isDown) {
+            my.sprite.player.setAccelerationX(-this.ACCELERATION);
+            my.sprite.player.resetFlip();
+        } else if (cursors.right.isDown) {
+            my.sprite.player.setAccelerationX(this.ACCELERATION);
+            my.sprite.player.setFlip(true, false);
+        } else {
+            my.sprite.player.setAccelerationX(0);
+        }
+
+        // Apply max speed
+        if (Math.abs(my.sprite.player.body.velocity.x) > this.MAX_VELOCITY) {
+            my.sprite.player.setVelocityX(Phaser.Math.Clamp(my.sprite.player.body.velocity.x, -this.MAX_VELOCITY, this.MAX_VELOCITY));
+        }
+
+        // Grounded drag
+        if (my.sprite.player.body.blocked.down) {
+            my.sprite.player.setDragX(this.DRAG);
+        } else {
+            my.sprite.player.setDragX(0);
+        }
+
+        // Gravity multiplier when falling
+        if (!my.sprite.player.body.blocked.down && my.sprite.player.body.velocity.y > 0) {
+            my.sprite.player.setGravityY(this.physics.world.gravity.y * 1.5);
+        } else {
+            my.sprite.player.setGravityY(0);
+        }
+
+        // Jumping
+        if (my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
+            my.sprite.player.setVelocityY(this.JUMP_VELOCITY);
+        }
+
+        /*
         if(cursors.left.isDown) {
             // TODO: have the player accelerate to the left
             
@@ -81,5 +125,6 @@ class mushroomHop extends Phaser.Scene {
             my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
 
         }
+        */
     }
 }
