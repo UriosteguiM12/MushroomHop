@@ -6,20 +6,20 @@ class Load extends Phaser.Scene {
     preload() {
         this.load.setPath("./assets/");
 
-        // Load characters spritesheet
-        this.load.atlas("platformer_characters", "tilemap_packed.png");
+        // Load character sprite (if it's a uniform grid)
+        this.load.spritesheet("platformer_characters", "tilemap-characters_packed.png", {
+            frameWidth: 18,  // Replace with correct frame size if needed
+            frameHeight: 18
+        });
 
-        // Load tilemap information
-        this.load.image("kenney_tiles", "spritesheet_retina.png");                         // Packed tilemap
-        this.load.tilemapTiledJSON("platformer-level-1", "level1.tmj");   // Tilemap in JSON
+        // Load tileset image used in Tiled
+        this.load.image("kenney_tiles", "tilemap_packed.png");
+
+        // Load exported tilemap (.tmj = Tiled Map JSON)
+        this.load.tilemapTiledJSON("platformer-level-1", "platformer-level-1.tmj");
     }
 
     create() {
-         // ...and pass to the next Scene
-         this.scene.start("Color");
-    }
-
-    // Never get here since a new scene is started in create()
-    update() {
+        this.scene.start("mushroomHop");
     }
 }

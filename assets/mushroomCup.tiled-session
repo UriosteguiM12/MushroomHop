@@ -1,0 +1,52 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "platformer-level-1..tmx": {
+            "scale": 0.4946932006633499,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1205.7978545088836,
+                "y": 180.92021454911173
+            }
+        },
+        "platformer-level-1..tmx#kenney_tilemap_packed": {
+            "scaleInDock": 1
+        },
+        "platformer-level-1.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1403,
+                "y": 45
+            }
+        },
+        "platformer-level-1.tmx#kenney_tilemap_packed": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/marin/CMPM120/MushroomHop/assets",
+    "last.imagePath": "C:/Users/marin/CMPM120/MushroomHop/assets",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 18,
+    "map.tileWidth": 18,
+    "map.width": 134,
+    "openFiles": [
+    ],
+    "project": "mushroomCup.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "platformer-level-1..tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 18,
+        "width": 18
+    }
+}

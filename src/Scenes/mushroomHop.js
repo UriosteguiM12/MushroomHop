@@ -1,6 +1,6 @@
-class Color extends Phaser.Scene {
+class mushroomHop extends Phaser.Scene {
     constructor() {
-        super("Color");
+        super("mushroomHop");
     }
 
     init() {
@@ -14,29 +14,20 @@ class Color extends Phaser.Scene {
     create() {
         this.map = this.make.tilemap({ key: "platformer-level-1" });
 
-        this.tileset = this.map.addTilesetImage("kenney-scribble", "kenney_tiles");
+        this.tileset = this.map.addTilesetImage("kenney_tilemap_packed", "kenney_tiles");
 
-        this.layerOne = this.map.createLayer("Tile Layer 1", this.tileset, 0, 0);
-        this.layerTwo = this.map.createLayer("Tile Layer 2", this.tileset, 0, 0);
-        this.layerThree = this.map.createLayer("Tile Layer 3", this.tileset, 0, 0);
+        this.groundLayer = this.map.createLayer("Ground-n-Platforms", this.tileset, 0, 0);
 
-        this.layerOne.setScale(2.0);
-        this.layerTwo.setScale(2.0);
-        this.layerThree.setScale(2.0);
+        this.groundLayer.setScale(2.0);
 
         // Make it collidable
-        this.layerOne.setCollisionByProperty({
-            collides: true
-        });
-        this.layerTwo.setCollisionByProperty({
-            collides: true
-        });
-        this.layerThree.setCollisionByProperty({
+        this.groundLayer.setCollisionByProperty({
             collides: true
         });
 
+
         // set up player avatar
-        my.sprite.player = this.physics.add.sprite(game.config.width/4, game.config.height/2, "platformer_characters", "tile_0115.png").setScale(SCALE)
+        my.sprite.player = this.physics.add.sprite(game.config.width/4, game.config.height/2, "platformer_characters", "tile_0000.png").setScale(SCALE)
         my.sprite.player.setCollideWorldBounds(true);
 
         // Enable collision handling
