@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="134" height="22" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="88">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="134" height="22" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="99">
  <editorsettings>
   <export target="platformer-level-1.tmj" format="json"/>
  </editorsettings>
@@ -447,7 +447,7 @@
 123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,24,74,74,74,74,74,74,74,74,74,74,74,102,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,124,74,74,74,74,74,74,74,74,74,74,74,22,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123
 </data>
  </layer>
- <objectgroup id="5" name="Danger">
+ <objectgroup id="5" name="Danger" locked="1">
   <object id="64" name="spike" gid="69" x="486" y="324" width="18" height="18"/>
   <object id="65" name="spike" gid="69" x="503.5" y="324.5" width="18" height="18"/>
   <object id="66" name="spike" gid="69" x="702" y="342" width="18" height="18"/>
@@ -471,7 +471,7 @@
   <object id="84" name="spike" gid="69" x="180" y="198.5" width="18" height="18"/>
   <object id="85" name="spike" gid="69" x="198" y="198" width="18" height="18"/>
  </objectgroup>
- <objectgroup id="4" name="Objects" visible="0" locked="1">
+ <objectgroup id="4" name="Objects">
   <object id="1" name="coin" gid="152" x="0.333333" y="324.333" width="18" height="18"/>
   <object id="3" name="coin" gid="152" x="36.3333" y="323.667" width="18" height="18"/>
   <object id="4" name="coin" gid="152" x="71.3333" y="323.667" width="18" height="18"/>
@@ -483,8 +483,6 @@
   <object id="10" name="coin" gid="152" x="1007.67" y="216.333" width="18" height="18"/>
   <object id="11" name="coin" gid="152" x="1169.33" y="288.667" width="18" height="18"/>
   <object id="12" name="coin" gid="152" x="1205.67" y="288.667" width="18" height="18"/>
-  <object id="13" name="coin" gid="152" x="1332" y="271" width="18" height="18"/>
-  <object id="14" name="coin" gid="152" x="1529.67" y="270" width="18" height="18"/>
   <object id="15" name="coin" gid="152" x="1729" y="252.333" width="18" height="18"/>
   <object id="16" name="coin" gid="152" x="1980.33" y="163" width="18" height="18"/>
   <object id="17" name="coin" gid="152" x="1997.33" y="162.333" width="18" height="18"/>
@@ -520,8 +518,6 @@
   <object id="47" name="coin" gid="152" x="521.667" y="90.3333" width="18" height="18"/>
   <object id="48" name="coin" gid="152" x="360.333" y="108.333" width="18" height="18"/>
   <object id="49" name="coin" gid="152" x="378" y="108" width="18" height="18"/>
-  <object id="50" name="coin" gid="152" x="378" y="126.667" width="18" height="18"/>
-  <object id="51" name="coin" gid="152" x="359.667" y="126.333" width="18" height="18"/>
   <object id="52" name="coin" gid="152" x="215.667" y="108.667" width="18" height="18"/>
   <object id="53" name="coin" gid="152" x="126" y="180.333" width="18" height="18"/>
   <object id="54" name="coin" gid="152" x="107.333" y="180" width="18" height="18"/>
@@ -530,6 +526,12 @@
   <object id="57" name="coin" gid="152" x="54" y="180.333" width="18" height="18"/>
   <object id="58" name="coin" gid="152" x="36" y="180" width="18" height="18"/>
   <object id="60" name="coin" gid="152" x="18" y="180" width="18" height="18"/>
+  <object id="91" name="coin" gid="152" x="1332.33" y="234.333" width="18" height="18"/>
+  <object id="92" name="coin" gid="152" x="1529.67" y="235.667" width="18" height="18"/>
+  <object id="94" name="coin" gid="152" x="1331.88" y="216" width="18" height="18"/>
+  <object id="96" name="coin" gid="152" x="1530" y="216.333" width="18" height="18"/>
+  <object id="97" name="coin" gid="152" x="360.25" y="91" width="18" height="18"/>
+  <object id="98" name="coin" gid="152" x="379.75" y="91.25" width="18" height="18"/>
  </objectgroup>
  <layer id="3" name="Danger" width="134" height="22" locked="1">
   <data encoding="csv">

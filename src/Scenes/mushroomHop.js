@@ -37,6 +37,36 @@ class mushroomHop extends Phaser.Scene {
             frame: 151
         });
 
+        // Initialize coin count
+        this.coinCount = 0;
+        this.healthCount = 5;
+
+        // Add text to the scene positioned relative to the camera viewport (top-left corner)
+        this.coinText = this.add.text(16, 16, 'Coins: 0', {
+            fontSize: '18px',
+            fill: '#fff',
+            fontFamily: 'Arial',
+            stroke: '#000',
+            strokeThickness: 3,
+        });
+
+        // Add text to the scene positioned relative to the camera viewport (top-left corner)
+        this.healthText = this.add.text(16, 16, 'Hearts: 5', {
+            fontSize: '18px',
+            fill: '#fff',
+            fontFamily: 'Arial',
+            stroke: '#000',
+            strokeThickness: 3,
+        });
+
+        this.coinText.setPosition(435, 275);
+        this.healthText.setPosition(435, 300);
+
+        // Make the text stay fixed on the camera (UI)
+        this.coinText.setScrollFactor(0);
+        this.healthText.setScrollFactor(0);
+
+
         this.spikes = this.map.createFromObjects("Danger", {
             name: "spike",
             key: "kenney_tiles",
@@ -132,12 +162,16 @@ class mushroomHop extends Phaser.Scene {
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
             this.collectSound.play();
             obj2.destroy(); // remove coin on overlap
+            this.coinCount++;
+            this.coinText.setText('Coins: ' + this.coinCount);
         });
 
         // Handle collision detection with spikes
         this.physics.add.overlap(my.sprite.player, this.spikeGroup, (obj1, obj2) => {
             this.impactSound.play();
             obj2.destroy(); // remove spike on overlap
+            this.healthCount--;
+            this.healthText.setText('Hearts: ' + this.healthCount);
         });
     }
 }
