@@ -47,6 +47,7 @@
         "platformer-level-1.tmx",
         "platformer-level-1..tmx"
     ],
+    "resizeMap.removeObjects": false,
     "tileset.embedInMap": true,
     "tileset.tileSize": {
         "height": 18,

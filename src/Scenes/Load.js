@@ -9,8 +9,10 @@ class Load extends Phaser.Scene {
         // Load characters spritesheet
         this.load.atlas("platformer_characters", "tilemap-characters_packed.png", "tilemap-characters-packed.json");
 
-        // Load tileset image used in Tiled
-        this.load.image("kenney_tiles", "tilemap_packed.png");
+        this.load.spritesheet("kenney_tiles", "tilemap_packed.png", {
+            frameWidth: 18,   // or 32, depending on your tile size
+            frameHeight: 18 //match what you used in Tiled
+        });
 
         // Load exported tilemap (.tmj = Tiled Map JSON)
         this.load.tilemapTiledJSON("platformer-level-1", "platformer-level-1.tmj");
