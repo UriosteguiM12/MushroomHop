@@ -16,40 +16,12 @@ class Load extends Phaser.Scene {
 
         // Load exported tilemap (.tmj = Tiled Map JSON)
         this.load.tilemapTiledJSON("platformer-level-1", "platformer-level-1.tmj");
+
+        this.load.multiatlas("kenny-particles", "kenny-particles.json", "./assets/");
+        console.log(this.textures.get('kenny-particles').getFrameNames());
     }
 
     create() {
-
-        this.anims.create({
-            key: 'walk',
-            frames: this.anims.generateFrameNames('platformer_characters', {
-                prefix: "tile_",
-                start: 0,
-                end: 1,
-                suffix: ".png",
-                zeroPad: 4
-            }),
-            frameRate: 15,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'idle',
-            defaultTextureKey: "platformer_characters",
-            frames: [
-                { frame: "tile_0000.png" }
-            ],
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'jump',
-            defaultTextureKey: "platformer_characters",
-            frames: [
-                { frame: "tile_0001.png" }
-            ],
-        });
-
         this.scene.start("mushroomHop");
     }
 }

@@ -148,6 +148,39 @@ class mushroomHop extends Phaser.Scene {
         this.physics.world.drawDebug = false;
         this.physics.world.debugGraphic.clear();
 
+        my.vfx = {};
+        // movement vfx
+        my.vfx.walking = this.add.particles(0, 0, "kenny-particles", {
+            frame: ['smoke_03.png', 'smoke_09.png', 'smoke_06.png', 'smoke_07.png'],
+            // TODO: Try: add random: true
+            random: true,
+            scale: {start: 0.1, end: 0.3},
+            // TODO: Try: maxAliveParticles: 8,
+            maxAliveParticles: 8,
+            lifespan: 350,
+            // TODO: Try: gravityY: -400,
+            gravityY: -400,
+            alpha: {start: 1, end: 0.1}, 
+        });
+
+        my.vfx.jump = this.add.particles(0, 0, "kenny-particles", {
+            frame: ['magic_03.png', 'magic_04.png', 'magic_02.png', 'magic_01.png'],
+            // TODO: Try: add random: true
+            random: true,
+            scale: {start: 0.1, end: 0.3},
+            // TODO: Try: maxAliveParticles: 8,
+            maxAliveParticles: 8,
+            lifespan: 500,
+            // TODO: Try: gravityY: -400,
+            gravityY: -400,
+            alpha: {start: 1, end: 0.1}, 
+        });
+
+        my.vfx.walking.stop();
+        my.vfx.jump.stop();
+
+        console.log(this.textures.get('kenney-particles').getFrameNames());
+
     }
 
     update() {
@@ -156,11 +189,43 @@ class mushroomHop extends Phaser.Scene {
         if (cursors.left.isDown) {
             my.sprite.player.setAccelerationX(-this.ACCELERATION);
             my.sprite.player.resetFlip();
+
+            // particle following code
+            my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth/2+20, my.sprite.player.displayHeight/2+10, false);
+
+            my.vfx.walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
+
+            // Only play smoke effect if touching the ground
+
+            if (my.sprite.player.body.blocked.down) {
+
+                my.vfx.walking.start();
+
+            }
+
+
         } else if (cursors.right.isDown) {
             my.sprite.player.setAccelerationX(this.ACCELERATION);
             my.sprite.player.setFlip(true, false);
+
+            // particle following code
+            my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-20, my.sprite.player.displayHeight/2+10, false);
+
+            my.vfx.walking.setParticleSpeed(-this.PARTICLE_VELOCITY, 0);
+
+            // Only play smoke effect if touching the ground
+
+            if (my.sprite.player.body.blocked.down) {
+                my.vfx.walking.start();
+                my.vfx.jump.stop();
+            }
+
+
         } else {
             my.sprite.player.setAccelerationX(0);
+
+            // have the vfx stop playing
+            my.vfx.walking.stop();
         }
 
         // Apply max speed
@@ -186,7 +251,14 @@ class mushroomHop extends Phaser.Scene {
         if (my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
             this.jumpSound.play();
             my.sprite.player.setVelocityY(this.JUMP_VELOCITY);
+
+            my.vfx.jump.startFollow(my.sprite.player, my.sprite.player.displayWidth/2, my.sprite.player.displayHeight/2+10, false);
+            my.vfx.jump.setParticleSpeed(-this.PARTICLE_VELOCITY, 0);
+            
+            my.vfx.jump.explode(10, my.sprite.player.x, my.sprite.player.y + my.sprite.player.displayHeight / 2);
+
         }
+        
 
         // Handle collision detection with coins
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
