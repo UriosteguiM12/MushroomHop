@@ -9,6 +9,9 @@ class mushroomHop extends Phaser.Scene {
         this.DRAG = 2000;
         this.JUMP_VELOCITY = -550;
         this.physics.world.gravity.y = 1600;
+
+        this.hasEnded = false;
+        this.gameOver = false;
     }
 
     preload() {
@@ -17,12 +20,22 @@ class mushroomHop extends Phaser.Scene {
         this.load.audio('jump', 'phaseJump2.ogg');
         this.load.audio('collect', 'tone1.ogg');
         this.load.audio('impact', 'impactBell_heavy_001.ogg');
+        this.load.audio('one', 'jingles_PIZZI00.ogg');
+        this.load.audio('two', 'jingles_PIZZI01.ogg');
+        this.load.audio('three', 'jingles_PIZZI02.ogg');
     }
     create() {
+
+        this.hasWon = false;
+        
+        this.restartKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.jumpSound = this.sound.add('jump');
         this.collectSound = this.sound.add('collect');
         this.impactSound = this.sound.add('impact');
+        this.sound1 = this.sound.add('one');
+        this.sound2 = this.sound.add('two');
+        this.sound3 = this.sound.add('three');
 
 
         this.map = this.make.tilemap({ key: "platformer-level-1" });
@@ -59,6 +72,13 @@ class mushroomHop extends Phaser.Scene {
             strokeThickness: 3,
         });
 
+        this.endText = this.add.text(0, 0, '', {
+            fontSize: '32px',
+            fill: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 6,
+        }).setScrollFactor(0).setDepth(100).setVisible(false);
+
         this.coinText.setPosition(435, 275);
         this.healthText.setPosition(435, 300);
 
@@ -73,21 +93,34 @@ class mushroomHop extends Phaser.Scene {
             frame: 68
         });
 
+        this.flag = this.map.createFromObjects("Flag", {
+            name: "flag",
+            key: "kenney_tiles",
+            frame: 131
+        });
+
         // Since createFromObjects returns an array of regular Sprites, we need to convert 
         // them into Arcade Physics sprites (STATIC_BODY, so they don't move) 
         this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
         this.physics.world.enable(this.spikes, Phaser.Physics.Arcade.STATIC_BODY);
+        this.physics.world.enable(this.flag, Phaser.Physics.Arcade.STATIC_BODY);
 
         // Create a Phaser group out of the array this.coins
         // This will be used for collision detection below.
         this.coinGroup = this.add.group(this.coins);
         this.spikeGroup = this.add.group(this.spikes);
+        this.flagGroup = this.add.group(this.flag);
 
         // Make it collidable
         this.groundLayer.setCollisionByProperty({
             collides: true
         });
 
+        this.input.keyboard.on('keydown-R', () => {
+            if (this.gameOver) {
+                this.scene.restart();
+            }
+        });
 
         // set up player avatar
         my.sprite.player = this.physics.add.sprite(200, 300, "platformer_characters", "tile_0000.png").setScale(SCALE)
@@ -95,9 +128,6 @@ class mushroomHop extends Phaser.Scene {
 
         my.sprite.player.setScale(1);
         my.sprite.player.setOrigin(0, 0);
-
-        console.log("Sprite size:", my.sprite.player.width, my.sprite.player.height);
-        console.log("Origin:", my.sprite.player.originX, my.sprite.player.originY);
 
         // Enable collision handling
         this.physics.add.collider(my.sprite.player, this.groundLayer);
@@ -168,10 +198,57 @@ class mushroomHop extends Phaser.Scene {
 
         // Handle collision detection with spikes
         this.physics.add.overlap(my.sprite.player, this.spikeGroup, (obj1, obj2) => {
+
             this.impactSound.play();
             obj2.destroy(); // remove spike on overlap
             this.healthCount--;
             this.healthText.setText('Hearts: ' + this.healthCount);
+
+            if (this.healthCount <= 0 && !this.hasEnded) {
+
+                this.gameOver = true;
+
+                // Stop player movement
+                my.sprite.player.setVelocity(0);
+                my.sprite.player.body.enable = false;
+
+                this.hasEnded = true;
+                this.endText.setText("     GAME OVER\nPress R to Restart");
+                this.endText.setVisible(true);
+                this.endText.setPosition(550, 425);
+            }
         });
+
+        this.physics.add.overlap(my.sprite.player, this.flagGroup, (obj1, obj2) => {
+
+            this.gameOver = true;
+
+            // Stop player movement
+            my.sprite.player.setVelocity(0);
+            my.sprite.player.body.enable = false;
+
+            if (!this.hasEnded) {
+                this.hasEnded = true;
+                this.sound1.play();
+                this.endText.setText("     YOU WIN!\nPress R to Restart");
+                this.endText.setVisible(true);
+                this.endText.setPosition(550, 425);
+            }
+        });
+
+        this.sound1.on('complete', () => {
+            this.sound2.play();
+            this.sound2.once('complete', () => {
+                this.sound3.play();
+            });
+        });
+
+        if (this.hasEnded && Phaser.Input.Keyboard.JustDown(this.restartKey)) {
+            this.scene.restart(); // Restarts the current scene
+        }
+
+        if (this.gameOver) {
+            return;
+        }
     }
 }
